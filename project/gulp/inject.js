@@ -19,7 +19,7 @@ gulp.task('inject-reload', ['inject'], function ()
 gulp.task('inject', ['scripts', 'styles'], function ()
 {
     var injectStyles = gulp.src([
-        path.join(conf.paths.tmp, '/serve/app/**/*.css'),
+        path.join(conf.paths.src, '*.css'),
         path.join('!' + conf.paths.tmp, '/serve/app/vendor.css')
     ], {read: false});
 
@@ -40,5 +40,5 @@ gulp.task('inject', ['scripts', 'styles'], function ()
         .pipe($.inject(injectStyles, injectOptions))
         .pipe($.inject(injectScripts, injectOptions))
         .pipe(wiredep(_.extend({}, conf.wiredep)))
-        .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve')));
+        .pipe(gulp.dest(conf.paths.src));
 });
