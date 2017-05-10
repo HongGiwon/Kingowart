@@ -25,7 +25,8 @@
             "password" : ""     
         },
         "path" : {
-            "view" : "/../src"
+            "view" : "/../src",
+            "index" : "/../.tmp/serve"  
         }
     },
     "production": {
@@ -53,7 +54,8 @@
             "password" : ""
         },
         "path" : {
-            "view" : "/../client/dist"
+            "view" : "/../dist",
+            "index" : "/../dist"   
         }
     }
 }
