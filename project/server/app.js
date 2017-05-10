@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var debug = require('debug');
 var http = require('http');
 var config = require('./config/config.json')[process.env.NODE_ENV || "development"];
+var viewPath = config.path;
 var routes = require('./routes/index');
 var port = normalizePort(process.env.PORT || '3000');
 
@@ -19,8 +20,11 @@ app.engine('html', require('ejs').renderFile);
 if(process.env.NODE_ENV === "development"){
   console.log("in development");
   // development인 경우, gulp가 .tmp 폴더에 컴포넌트들 inject한 html을 생성함. 따라서 그에 맞게 경로 설정해줌.
-  app.use('/', express.static(path.join(__dirname, "/../src")));
+  app.use('/', express.static(path.join(__dirname, viewPath.index)));
+  app.use('/app', express.static(path.join(__dirname, viewPath.view, 'app')));
+  app.use('/assets', express.static(path.join(__dirname, viewPath.view, 'assets')));
   app.use('/bower_components', express.static(path.join(__dirname, "/../bower_components")));
+  app.use('/public', express.static(path.join(__dirname, "/../public")));
 }
 else{
   console.log("in production");
@@ -40,7 +44,7 @@ app.use('/', routes);
 
 // 없으면 angular url 라우팅.
 app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '/../src/index.html'));
+    res.sendFile(path.join(__dirname, viewPath.index, 'index.html'));
 });
 
 // error handlers
